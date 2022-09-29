@@ -31,19 +31,38 @@ Best of luck
 
 ---
 
-The app is consisting of 4 parts: components, hook, store and apollo client.
-
-The components involves the ui parts of the application. The pages is devided into 2 parts: header and view.
-The header contains the search input allowing search for specific topic.
-The view contains the current topic's information and the relative topics.
-
-The data management is implemented on hook and store.
-Store contains the context involving the search string to synchronous with the search input and the search view.
-Hook manages fetching data from github graphql server.
-
-The apollo client is for creating connection to the github graphql server.
+[View demo here](https://www.loom.com/share/22872139b9a7461b8ea09f25dd2d0b49)
 
 ---
+
+### Dev approach
+
+#### Project structure
+
+- src
+  - apollo (apollo client)
+  - components
+    - Header (header component with search bar)
+    - ResultView (search result view)
+  - hook (custom hook)
+  - store (context provider to store app state)
+  - App.js (main application)
+  - index.js (entry point)
+
+#### Components
+
+- Split the page into two parts - header with caption and search bar, result view part that displays the search result.
+- Each components has sub-components defined inside, that are used internally within that component.
+
+#### Styling
+
+Used styled-component instead of writing css or scss to get benefit from its scoped styling and no-class policy. Styled components are defined within the `*.components.js` file in each component directory, so the main component doesn't mess with the styling.
+
+#### State management and display
+
+- Using external libraries (like Redux, React-query or Recoil) for global state management is overkill, so used React's context api to make it simple and clean.
+- Defined `SearchContext` to provide search query and modifier.
+- Defined `useTopicQuery` custom hook to fetch query results from Github GraphQL server and then render them on the result view.
 
 ### How to run app & test
 
@@ -68,21 +87,18 @@ yarn start
 
 5. Browse on the browser through `https://localhost:3000/`
 
+---
+
 ### Future Improvements
 
 Feel free to elaborate on how you would improve any of the following topics
 
-- Code Structuring:
+- Due to the time constraint, testing solution is not implemented yet. Can integrate testing frameworks like react-testing-library to implement unit tests and e2e tests.
 
-  Due to the size of the app, the folder structure lacks a degree of organzation; mainly on the components for result view.
+- We can add filtering ability to the search result view, so users can easily navigate and find out what they need.
 
-  Because the components are used only once on the project, the components are stricted to local scope and not to global scoped.
+- It would be nice to track the search history so that it could move forth and back during the search.
 
-- Refactoring:
-  The `ResultView` is manages the state of the fetching query and the error handling is involved in the component. It can be implemented with the HOC or Suspense.
+- Better style the components for better user experience, and also add storybook for component documentation & testing.
 
-  For rapid commit, the unit testing hasn't been implemented here. 
-- Additional Features:
-  A very obvious improvement would be to add filtering to the order of the related topics; either by name or amount of stargazers on that particular topic.
-  
-  It only displays current search result and doesn't tracking the search history, It could move forward and backforward while searching the proper result.
+- Consider using Typescript within the project to ensure strong type checking.
